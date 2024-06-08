@@ -1,2 +1,2 @@
 # euler-scheduler
-My implementation of Euler Method Scheduling for Flow Matching models
+My implementation Diffusers-like Scheduler for performing Euler Method on Conditional Flow Matching models
