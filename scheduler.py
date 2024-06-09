@@ -89,7 +89,7 @@ class FlowMatchingEulerScheduler:
         self.timesteps = torch.arange(0, 1, self.h)
 
     def step(self, model_output: torch.Tensor, timesteps: torch.Tensor, sample: torch.Tensor,
-             return_dict: bool = True) -> FlowMatchingEulerSchedulerOutput | tuple[Tensor, Tensor]:
+             return_dict: bool = True) -> FlowMatchingEulerSchedulerOutput | tuple[Tensor]:
         """
         Predict the sample from the previous timestep by reversing the SDE. This function propagates the diffusion
         process from the learned model outputs (most often the predicted noise).
@@ -115,7 +115,7 @@ class FlowMatchingEulerScheduler:
         if return_dict:
             return step
 
-        return sample, step.prev_sample
+        return step.prev_sample,
 
     @staticmethod
     def get_velocity(original_samples: torch.Tensor, noise: torch.Tensor) -> torch.Tensor:
