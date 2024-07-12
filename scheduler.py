@@ -29,13 +29,23 @@ class FlowMatchingEulerSchedulerOutput:
         self.timesteps = timesteps
         self.h = h
 
+        self.ps = None
+        self.pos = None
+
     @property
     def prev_sample(self) -> torch.Tensor:
-        return self.sample + self.h * self.model_output
+        if self.ps is None:
+            self.ps = self.sample + self.h * self.model_output
+
+        return self.ps
 
     @property
     def pred_original_sample(self) -> torch.Tensor:
-        return self.sample + (1 - get_time_coefficients(self.timesteps, self.model_output.ndim)) * self.model_output
+        if self.pos is None:
+            self.pos = self.sample + (
+                        1 - get_time_coefficients(self.timesteps, self.model_output.ndim)) * self.model_output
+
+        return self.pos
 
 
 class FlowMatchingEulerScheduler:
